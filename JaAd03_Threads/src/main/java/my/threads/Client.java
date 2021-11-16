@@ -11,8 +11,8 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Client {
 
     public static void main(String[] args) {
-        //Изящный способ выполнения асинхноррого кода
-        // с применением интефейса Callable, Futиre и Executors,
+        //Изящный способ выполнения асинхронного кода
+        // с применением Callable, Futиre и Executors,
         // спрятанных в классе SlowMeter
 
         SlowMeter meter = new SlowMeter();
