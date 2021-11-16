@@ -3,12 +3,41 @@ package my.threads;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Client {
 
     public static void main(String[] args) {
+        //Изящный способ выполнения асинхноррого кода
+        // с применением интефейса Callable, Futиre и Executors,
+        // спрятанных в классе SlowMeter
+
+        SlowMeter meter = new SlowMeter();
+        List<Future<Integer>> results = new ArrayList<>();
+
+        int[] meters = {1,2,3,4,5,6,7,8,9};
+        Arrays.stream(meters).forEach(n -> {
+            results.add(meter.measureAsync(n));
+        });
+
+        results.forEach(f -> {
+            try {
+                System.out.println(f.get());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        });
+
+        meter.shutdown();
+
+    }
+
+    public static void main6(String[] args) {
         //Решаем проблему ожидания
         // с помощью контроля состояния пула потоков при наличии таймаута
         int timeout = 5000;
