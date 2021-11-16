@@ -9,7 +9,7 @@ public class SlowMeter {
 
     //Executor отвечает за запуск задач
     private ExecutorService executor =
-            Executors.newFixedThreadPool(20);
+            Executors.newFixedThreadPool(333);
 
     public int measure(int n) {
         try {
