@@ -8,7 +8,7 @@ import java.util.function.Function;
 public class IntegerCollectionTransformWithStandardFunctionInterface {
 
     //Не обязaтельно писать свои собственные функциональные интрерфейсы.
-    // Можно использовать готовые
+    // Можно использовать готовые (в данном случае, Function)
 
     public List<Integer> transform(List<Integer> data, Function<Integer, Integer> transform) {
         List<Integer> result = new ArrayList<>();

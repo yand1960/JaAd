@@ -7,7 +7,7 @@ import java.util.function.Function;
 public class Client {
 
     public static void main(String[] args) {
-        //Стиль лямбда c применением стандартных функцональных интерефейсов
+        //Стиль лямбда c применением стандартных функцональных интерфейсов
         List<Integer> data = new ArrayList<>();
         data.add(1); data.add(2); data.add(3);
         var ict = new IntegerCollectionTransformWithStandardFunctionInterface();
@@ -18,7 +18,6 @@ public class Client {
         ict.transform(data, lambda).forEach(x -> {
             System.out.println(x);
         });
-
     }
 
 
@@ -29,7 +28,7 @@ public class Client {
         data.add(1); data.add(2); data.add(3);data.add(4); data.add(5);
 
         data.stream()
-                .map(x -> x * x) // здесь использован Function<Integer>
+                .map(x -> x * x) // здесь использован Function<Integer,Integer>
                 .filter(x -> x > 10) //здесь использован Predicate<Integer>
                 .forEach( x -> { //здесь использован Consumer<Integer>
                     System.out.println(x);
