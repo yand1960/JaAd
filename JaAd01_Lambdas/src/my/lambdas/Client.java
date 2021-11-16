@@ -7,7 +7,7 @@ import java.util.function.Function;
 public class Client {
 
     public static void main(String[] args) {
-        //Стиль лямбда c применением стандартных функцональных интерефейсов
+        //Стиль лямбда c применением стандартных функцональных интерфейсов
         List<Integer> data = new ArrayList<>();
         data.add(1); data.add(2); data.add(3);
         var ict = new IntegerCollectionTransformWithStandardFunctionInterface();
