@@ -9,6 +9,104 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Client {
 
     public static void main(String[] args) {
+        //Решаем проблему ожидания
+        // с помощью контроля состояния пула потоков при наличии таймаута
+        int timeout = 5000;
+
+        SlowMeter meter = new SlowMeter();
+        int[] meters = {1,2,3,4,5,6,7,8,9};
+
+        List<Measurement> results = new ArrayList<Measurement>();
+        ReentrantLock lock = new ReentrantLock();
+        List<Thread> pool = new ArrayList<>();
+
+        Arrays.stream(meters).forEach(n -> {
+            Thread thread = new Thread(() -> {
+                int result = meter.measure(n);
+                //Обеспечиваем синхронный доступ
+                // к потоко-небезопасному блоку кода
+                lock.lock();
+                results.add(new Measurement(n, result));
+                lock.unlock();
+
+            });
+            pool.add(thread);
+            //Поток-демон автоматически заканчивется, если в процессе
+            // не осталось потоков-недемонов
+            thread.setDaemon(true);
+            //System.out.println(thread.isDaemon());
+            thread.start();
+        });
+
+        //Оптимальный способ дождаться окончания работы всех потоков
+        pool.forEach(t -> {
+            try {
+                t.join(timeout);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+
+        results.stream()
+                .sorted((m1,m2) -> m1.id.compareTo(m2.id))
+                .forEach(m -> {
+                    System.out.println(m);
+                });
+    }
+
+
+    public static void main5(String[] args) {
+        //Решаем проблему ожидания
+        // с помощью контроля состояния пула потоков
+        SlowMeter meter = new SlowMeter();
+        int[] meters = {1,2,3,4,5,6,7,8,9};
+
+        List<Measurement> results = new ArrayList<Measurement>();
+        ReentrantLock lock = new ReentrantLock();
+        List<Thread> pool = new ArrayList<>();
+
+        Arrays.stream(meters).forEach(n -> {
+            Thread thread = new Thread(() -> {
+                int result = meter.measure(n);
+                //Обеспечиваем синхронный доступ
+                // к потоко-небезопасному блоку кода
+                lock.lock();
+                results.add(new Measurement(n, result));
+                lock.unlock();
+
+            });
+            pool.add(thread);
+            thread.start();
+        });
+
+        //Полезная демонстрация, но не самый оптимальный код
+        Boolean allStopped = false;
+        while(!allStopped) {
+            allStopped = true;
+            for (Thread thread : pool) {
+                allStopped = allStopped && !thread.isAlive();
+            }
+        }
+
+        //Оптимальный способ дождаться окончания работы всех потоков
+//        pool.forEach(t -> {
+//            try {
+//                t.join();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        });
+
+
+        results.stream()
+                .sorted((m1,m2) -> m1.id.compareTo(m2.id))
+                .forEach(m -> {
+                    System.out.println(m);
+                });
+    }
+
+    public static void main4(String[] args) {
         //Решаем проблему ожидания с помощью самописного счетчика
         SlowMeter meter = new SlowMeter();
         int[] meters = {1,2,3,4,5,6,7,8,9};
