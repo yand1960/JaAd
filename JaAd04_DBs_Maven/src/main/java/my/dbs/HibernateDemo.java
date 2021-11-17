@@ -31,7 +31,6 @@ public class HibernateDemo {
         }
 
         session.beginTransaction().commit(); //Ошибка прав, но sql хороший и для p1, и для p2
-
         session.close();
 
     }
