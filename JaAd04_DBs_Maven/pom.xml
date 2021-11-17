@@ -32,6 +32,7 @@
     </dependencies>
 
     <build>
+        <finalName>MyApp1</finalName>
         <plugins>
             <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -39,9 +40,40 @@
                     <version>3.2.0</version>
                     <configuration>
                         <archive>
-
+                            <manifest>
+                                <mainClass>
+                                    my.dbs.JDBCDemo
+                                </mainClass>
+                                <addClasspath>
+                                    true
+                                </addClasspath>
+                                <classpathPrefix>
+                                    lib/
+                                </classpathPrefix>
+                            </manifest>
                         </archive>
                     </configuration>
+            </plugin>
+            <plugin>
+
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>
+                                copy-dependencies
+                            </goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/lib
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+
             </plugin>
         </plugins>
     </build>
