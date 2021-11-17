@@ -1,9 +1,6 @@
 package my.dbs;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "Production.Product")
@@ -11,6 +8,7 @@ public class Product {
 
     @Id
     @Column(name = "ProductID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     @Column(name = "ProductNumber")
