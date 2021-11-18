@@ -21,7 +21,7 @@ public class ProductsServiceTest {
     public void productsByFirstLettersTest() {
         ProductService service =
                 new ProductServiceImpl(new RepositoryJDBC());
-        var result = service.productsByFirstLetters("A");
+        var result = service.productsByFirstLetters("a");
         Assertions.assertEquals(3, result.size());
     }
 
