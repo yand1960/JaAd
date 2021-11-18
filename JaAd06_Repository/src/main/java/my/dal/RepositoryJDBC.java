@@ -19,6 +19,13 @@ public class RepositoryJDBC implements Repository {
 
     public RepositoryJDBC(String url, String user, String pwd){
 
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error in repository. See log.");
+        }
+
         try(Connection cn = DriverManager.getConnection(url,user ,pwd)) {
             String sql = "SELECT ProductID, Name, ProductNumber, ListPrice " +
                     "FROM Production.Product ";
