@@ -6,12 +6,20 @@
     <script>
 
         function getProducts() {
-            var url = "api/products?letters=a";
+            var url = "api/products?letters="
+                            + document.getElementById("letters").value;
             var xhr = new XMLHttpRequest();
             xhr.open("GET",url,false);
             xhr.send();
             var results = xhr.responseText;
-            alert(results);
+            //alert(results);
+            var products = JSON.parse(results);
+            //alert(products);
+            var out = "";
+            for(var i=0; i < products.length; i++) {
+                out += products[i].name + "<br />";
+            }
+            document.getElementById("results").innerHTML = out;
         }
 
     </script>
