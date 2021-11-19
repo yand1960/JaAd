@@ -1,5 +1,7 @@
 package my.servlets;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.jaxrs.cfg.JaxRSFeature;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,7 +24,14 @@ public class ProductServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Product> products = productService.allProducts();
-        resp.getWriter().println(products.size());
+        //List<Product> products = productService.allProducts();
+
+        String letters = req.getParameter("letters").toString();
+        List<Product> products = productService.productsByFirstLetters(letters);
+
+        ObjectMapper mapper = new ObjectMapper();
+        resp.getWriter().println(
+                mapper.writeValueAsString(products)
+        );
     }
 }

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+    <script>
+
+        function getProducts() {
+            var url = "api/products?letters=a";
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET",url,false);
+            xhr.send();
+            var results = xhr.responseText;
+            alert(results);
+        }
+
+    </script>
+</head>
+<body>
+    <h1>Product List</h1>
+    <input id="letters" onkeyup="getProducts();"/> <br />
+    <div id="results"></div>
+</body>
+</html>
