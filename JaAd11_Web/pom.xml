@@ -23,6 +23,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>my.buslog</groupId>
+            <artifactId>JaAd07_BusLog_Mockito</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
